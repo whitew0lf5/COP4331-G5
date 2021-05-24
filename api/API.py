@@ -16,13 +16,8 @@ connection = mysql.connector.connect(
 )
 cursor = connection.cursor()
 
-
+# the string inside @api.route() is what will come after `165.227.185.106:5000` in the url
 api = flask.Flask(__name__)
-
-# A test api endpoint to get you started
-@api.route('/api/test')
-def test_route():
-    return "YO BRO WHATS POPPIN"
 
 
 # A test api endpoint to get you started
