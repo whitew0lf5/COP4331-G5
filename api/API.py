@@ -2,6 +2,7 @@ import mysql.connector
 import flask
 from flask import request, jsonify
 
+
 # All API endpoints (Otherwise known as routes) are a set of functions that will perform some behaviour, and return a
 # response. The way that flask works is it creates an indefinitely running application that allows any function marked
 # with @app.route() to be called through a URL. To Deploy the API, log into the server, navigate to the /var/www/api
@@ -137,4 +138,5 @@ def searchcontacts(fname, lname, userid):
 
 
 # Start the API
-api.run(host='0.0.0.0')
+if __name__ == '__main__':
+    api.run(host='0.0.0.0')

@@ -1,6 +1,5 @@
 # API Documentation
-To Deploy the API to the server use SSH to copy the API.py file into the `/var/www/api` folder. Next connect to the 
-server and cd into `/var/www/api`, then run `python3 API.py`
+To Deploy the API to the server use SSH to copy the API.py file into the `/var/www/api` folder. Next run the command: `systemctl reload apache2` which will restart the server and the new API.
 
 ## Endpoints (Routes)
 ### Login
