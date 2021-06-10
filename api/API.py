@@ -33,7 +33,7 @@ def ping():
     return jsonify({"response": {"code": 200, "message": "Ping!"}})
 
 
-@api.route('/login/<usr>/<pwd>')
+@api.route('/login/<usr>/<pwd>', methods=["POST"])
 def login(usr, pwd):
     try:
         cursor.callproc('Login', (usr, pwd))
@@ -51,7 +51,7 @@ def login(usr, pwd):
         return jsonify({"response": {"code": 404, "message": "Database connection failed"}})
 
 
-@api.route('/register/<fname>/<lname>/<usr>/<pwd>')
+@api.route('/register/<fname>/<lname>/<usr>/<pwd>', methods=["POST"])
 def register(fname, lname, usr, pwd):
     try:
         cursor.callproc('Register', (fname, lname, usr, pwd))
@@ -68,7 +68,7 @@ def register(fname, lname, usr, pwd):
         return jsonify({"response": {"code": 404, "message": "Database connection failed"}})
 
 
-@api.route('/deleteuser/<userid>')
+@api.route('/deleteuser/<userid>', methods=["POST"])
 def deleteuser(userid):
     try:
         cursor.callproc('DeleteUser', (userid))
@@ -80,7 +80,7 @@ def deleteuser(userid):
         return jsonify({"response": {"code": 404, "message": "Database connection failed"}})
 
 
-@api.route('/addcontact/<fname>/<lname>/<phonenum>/<emailadd>/<userid>')
+@api.route('/addcontact/<fname>/<lname>/<phonenum>/<emailadd>/<userid>', methods=["POST"])
 def addcontact(fname, lname, phonenum, emailadd, userid):
     try:
         cursor.callproc('AddContact', (fname, lname, phonenum, emailadd, userid))
@@ -97,7 +97,7 @@ def addcontact(fname, lname, phonenum, emailadd, userid):
         return jsonify({"response": {"code": 404, "message": "Database connection failed"}})
 
 
-@api.route('/deletecontact/<identifier>')
+@api.route('/deletecontact/<identifier>', methods=["POST"])
 def deletecontact(identifier):
     try:
         cursor.callproc('DeleteContact', (identifier))
@@ -109,7 +109,7 @@ def deletecontact(identifier):
         return jsonify({"response": {"code": 404, "message": "Database connection failed"}})
 
 
-@api.route('/editcontact/<fname>/<lname>/<phonenum>/<emailadd>/<identifier>')
+@api.route('/editcontact/<fname>/<lname>/<phonenum>/<emailadd>/<identifier>', methods=["POST"])
 def editcontact(fname, lname, phonenum, emailadd, identifier):
     try:
         cursor.callproc("EditContact", (fname, lname, phonenum, emailadd, identifier))
@@ -121,7 +121,7 @@ def editcontact(fname, lname, phonenum, emailadd, identifier):
         return jsonify({"response": {"code": 404, "message": "Database connection failed"}})
 
 
-@api.route('/searchcontacts/<fname>/<lname>/<userid>')
+@api.route('/searchcontacts/<fname>/<lname>/<userid>', methods=["GET"])
 def searchcontacts(fname, lname, userid):
     try:
         if fname == '_':
