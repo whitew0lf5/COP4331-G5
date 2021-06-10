@@ -5,7 +5,7 @@
 		<!-- Scales website to devices -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>COP 4331 G5 Edit Contact</title>
-		<link rel="stylesheet" href="stylesheet.css">
+		<link rel="stylesheet" href="css/stylesheet.css">
 	</head>
 	<body>
 		<main>
@@ -14,26 +14,27 @@
 				</h1>
 				<div class="flex-container">
 					<div class="flex-item">
-						<label for="editName">First name: </label>
+						<label for="editName">First name: </label><br>
 						<input type="text" placeholder="First Name" id="editName" />
 					</div>
 					<div class="flex-item">
-						<label for="editLastName">Last Name: </label>
+						<label for="editLastName">Last Name: </label><br>
 						<input type="text" placeholder="Last Name" id="editLastName" />
 					</div>
 					<div class="flex-item">
-						<label for="editPhoneNumber">Phone Number: </label>
+						<label for="editPhoneNumber">Phone Number: </label><br>
 						<input type="text" placeholder="###-###-###" id="editPhoneNumber" />
 					</div>
 					<div class="flex-item">
-						<label for="editEmail">E-Mail: </label>
+						<label for="editEmail">E-Mail: </label><br>
 						<input type="text" placeholder="Edit Email" id="editEmail" />
 					</div>
 					<div class="flex-item">
-						<label for="editDate">Date Added: </label>
+						<label for="editDate">Date Added: </label><br>
 						<input type="text" placeholder="Date" id="editDaate" />
 					</div>
 					<div class="flex-item">
+						<button id="cancel" class="buttons" onclick="doCancel();">Cancel</button>
 						<button id="confirm" class="buttons" onclick="doConfirm();">Confirm</button>
 					</div>
 				</div>
