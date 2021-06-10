@@ -1,5 +1,5 @@
 # API Documentation
-To Deploy the API to the server use SSH to copy the API.py file into the `/var/www/api` folder. Next run the command: `systemctl reload apache2` which will restart the server and the new API.
+To Deploy the API to the server use SSH to copy the API.py file into the `/var/www/html/flaskapi/` folder (API.wsgi must be present in the flaskapi folder with API.py). Next run the command: `systemctl reload apache2` which will restart the server and the new API.
 
 ## Endpoints (Routes)
 ### Login
