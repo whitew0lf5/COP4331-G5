@@ -6,7 +6,7 @@ var lastName = "";
 
 function doLogin()
 {
-	userId = 0;
+	  userId = 0;
 		firstName = "";
 		lastName = "";
 
@@ -20,7 +20,7 @@ function doLogin()
 	} else if(password === "") {
 		document.getElementById("loginResult").innerHTML = "Password is required";
 		return;
-	}
+   }
 
 		document.getElementById("loginResult").innerHTML = "";
 
@@ -46,9 +46,15 @@ function doLogin()
 						document.getElementById("loginResult").innerHTML = "User/Password combination incorrect";
 						return;
 					}
-
-					firstName = jsonObject.firstName;
-					lastName = jsonObject.lastName;
+          
+          var data = jsonObject.response.data;
+					userId = data[0];
+					console.log(userId);
+          
+					firstName = data[1];
+					lastName = data[2];
+          console.log(firstName);
+          console.log(lastName);
 
 					saveCookie();
 
@@ -114,12 +120,6 @@ function doRegister()
 						document.getElementById("loginResult").innerHTML = "User Already Exists";
 						return;
 					}
-
-					firstName = jsonObject.firstName;
-					lastName = jsonObject.lastName;
-
-					saveCookie();
-
 					window.location.href = "index.html";
 
 				}
@@ -136,16 +136,19 @@ function doRegister()
 
 function saveCookie()
 {
-	var minutes = 20;
-	var date = new Date();
-	date.setTime(date.getTime()+(minutes*60*1000));
-	document.cookie = "firstName=" + firstName + ",lastName=" + lastName + ",userId=" + userId + ";expires=" + date.toGMTString();
+	 var minutes = 20;
+   var date = new Date();
+	 date.setTime(date.getTime()+(minutes*60*1000));	
+	 document.cookie = "firstName=" + firstName + ",lastName=" + lastName + ",userId=" + userId + ";expires=" + date.toGMTString();
+   var cookies = document.cookie;
+   console.log(cookies);
+ 
 }
 
 function readCookie()
 {
 	userId = -1;
-	var data = document.cookie;
+  var data = document.cookie;
 	var splits = data.split(",");
 	for(var i = 0; i < splits.length; i++)
 	{
@@ -184,13 +187,33 @@ function doLogout()
 	window.location.href = "index.html";
 }
 
-function addColor()
+function doConfirm()
 {
-	var newColor = document.getElementById("colorText").value;
-	document.getElementById("colorAddResult").innerHTML = "";
+	var addName = document.getElementById("addName").value;
+	var addLastName = document.getElementById("addLastName").value;
+	var email = document.getElementById("addEmail").value;
+	var phoneNO = document.getElementById("addPhoneNumber").value;
 
-	var jsonPayload = '{"color" : "' + newColor + '", "userId" : ' + userId + '}';
-	var url = urlBase + '/AddColor.' + extension;
+	if(addName === "") {
+	 document.getElementById("loginResult").innerHTML = "First name is required";
+	 return;
+ } else if(addLastName === "") {
+	 document.getElementById("loginResult").innerHTML = "Last name is required";
+	 return;
+ } else if(email === "") {
+	 document.getElementById("loginResult").innerHTML = "Email is required";
+	 return;
+ } else if(phoneNO === "") {
+	 document.getElementById("loginResult").innerHTML = "Phone number is required";
+	 return;
+ }
+
+	document.getElementById("loginResult").innerHTML = "";
+ 
+   console.log(userId);
+	
+	var jsonPayload = '{"firstname" : "' + firstName + '", "lastname" : "' + lastName + '", "email" : "' + email + '", "phoneNO" : "' + phoneNO + '", "userID" : ' + userId + '}';
+	var url = urlBase + 'addcontact/' + addName + '/' + addLastName + '/' + phoneNO + '/' + email + '/' + userId  ;
 
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
@@ -201,7 +224,22 @@ function addColor()
 		{
 			if (this.readyState == 4 && this.status == 200)
 			{
-				document.getElementById("colorAddResult").innerHTML = "Color has been added";
+
+				var jsonObject = JSON.parse( xhr.responseText );
+				console.log(jsonObject.response.code);
+				var responseCode = jsonObject.response.code;
+
+				if( responseCode == 401 )
+				{
+					document.getElementById("loginResult").innerHTML = "Contact already exists";
+					return;
+				}
+
+				if( responseCode == 200 )
+				{
+					window.location.href = "menu.html";
+				}
+			
 			}
 		};
 		xhr.send(jsonPayload);
