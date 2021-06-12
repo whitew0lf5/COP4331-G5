@@ -49,12 +49,9 @@ function doLogin()
           
           var data = jsonObject.response.data;
 					userId = data[0];
-					console.log(userId);
           
 					firstName = data[1];
 					lastName = data[2];
-          console.log(firstName);
-          console.log(lastName);
 
 					saveCookie();
 
@@ -138,11 +135,10 @@ function saveCookie()
 {
 	 var minutes = 20;
    var date = new Date();
-	 date.setTime(date.getTime()+(minutes*60*1000));	
-	 document.cookie = "firstName=" + firstName + ",lastName=" + lastName + ",userId=" + userId + ";expires=" + date.toGMTString();
-   var cookies = document.cookie;
-   console.log(cookies);
- 
+	 date.setTime(date.getTime()+(minutes*60*1000));
+   sessionStorage.setItem("lastname", lastName);
+   sessionStorage.setItem("firstname", firstName);
+   sessionStorage.setItem("id", userId); 
 }
 
 function readCookie()
@@ -180,10 +176,7 @@ function readCookie()
 
 function doLogout()
 {
-	userId = 0;
-	firstName = "";
-	lastName = "";
-	document.cookie = "firstName= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+	sessionStorage.clear();
 	window.location.href = "index.html";
 }
 
@@ -193,6 +186,8 @@ function doConfirm()
 	var addLastName = document.getElementById("addLastName").value;
 	var email = document.getElementById("addEmail").value;
 	var phoneNO = document.getElementById("addPhoneNumber").value;
+   
+  userId = sessionStorage.getItem("id");
 
 	if(addName === "") {
 	 document.getElementById("loginResult").innerHTML = "First name is required";
@@ -210,7 +205,6 @@ function doConfirm()
 
 	document.getElementById("loginResult").innerHTML = "";
  
-   console.log(userId);
 	
 	var jsonPayload = '{"firstname" : "' + firstName + '", "lastname" : "' + lastName + '", "email" : "' + email + '", "phoneNO" : "' + phoneNO + '", "userID" : ' + userId + '}';
 	var url = urlBase + 'addcontact/' + addName + '/' + addLastName + '/' + phoneNO + '/' + email + '/' + userId  ;
