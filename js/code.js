@@ -245,18 +245,19 @@ function doConfirm()
 
 }
 
-function searchColor()
+function doSearchfirst()
 {
-	var srch = document.getElementById("searchText").value;
-	document.getElementById("colorSearchResult").innerHTML = "";
+	var srch = "_"
+	//document.getElementById("colorSearchResult").innerHTML = "";
 
 	var colorList = "";
+	userId = sessionStorage.getItem("id");
 
 	var jsonPayload = '{"search" : "' + srch + '","userId" : ' + userId + '}';
-	var url = urlBase + '/SearchColors.' + extension;
+	var url = urlBase + 'searchcontacts/' + srch + '/' + userId;
 
 	var xhr = new XMLHttpRequest();
-	xhr.open("POST", url, true);
+	xhr.open("GET", url, true);
 	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 	try
 	{
@@ -264,19 +265,40 @@ function searchColor()
 		{
 			if (this.readyState == 4 && this.status == 200)
 			{
-				document.getElementById("colorSearchResult").innerHTML = "Color(s) has been retrieved";
+				//document.getElementById("colorSearchResult").innerHTML = "Color(s) has been retrieved";
 				var jsonObject = JSON.parse( xhr.responseText );
+				var data = jsonObject.response.data;
+        var button = document.createElement('input');
 
-				for( var i=0; i<jsonObject.results.length; i++ )
-				{
-					colorList += jsonObject.results[i];
-					if( i < jsonObject.results.length - 1 )
-					{
-						colorList += "<br />\r\n";
-					}
-				}
+        button.setAttribute('type', 'button');
+        button.setAttribute('value', 'Remove');
 
-				document.getElementsByTagName("p")[0].innerHTML = colorList;
+				var html = "<table class ='flex-item' id='contacts'>";
+        html += "<tr>";
+        html += "<th><p>Contact ID</p></th>";
+        html += "<th><p>First Name</p></th>";
+        html += "<th><p>Last Name</p></th>";
+        html += "<th><p>Phone Number</p></th>";
+        html += "<th><p>E-mail</p></th>";
+        html += "<th><p>Date added</p></th>";
+        html += "<th><p>Delete</p></th>";
+        html += "</tr>";
+      for (var i = 0; i < data.length; i++) {
+        html+= "<tr id = '" + i + "'>";
+        var date = data[i];
+        html += "<td><p>"+date[0]+"</p></td>";
+        html += "<td><p>"+date[2]+"</p></td>";
+        html += "<td><p>"+date[3]+"</p></td>";
+        html += "<td><p>"+date[5]+"</p></td>";
+        html += "<td><p>"+date[4]+"</p></td>";
+        html += "<td><p>"+date[1]+"</p></td>";
+        html += "<td><button id='addContact' class='buttons' onclick='doRemove();'>Delete</button></td>";
+        html +="</tr>";
+
+      }
+        html+="</table>";
+        document.getElementById("box").innerHTML = html;
+
 			}
 		};
 		xhr.send(jsonPayload);
@@ -286,4 +308,41 @@ function searchColor()
 		document.getElementById("colorSearchResult").innerHTML = err.message;
 	}
 
+}
+
+function doRemove()
+{
+  var td = event.target.parentNode; 
+  var tr = td.parentNode;
+  var Cells = tr.getElementsByTagName("td");
+  var identifier = Cells[0].innerText;
+  var confirmaction = confirm("Are you sure you want to delete this contact?");
+  if(confirmaction)
+  {
+    var jsonPayload = '{"identifier" : "' + identifier + '}';
+    console.log(identifier);
+    var url = urlBase + 'deletecontact/' + identifier;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    try
+    {
+      xhr.onreadystatechange = function()
+    {
+      if (this.readyState == 4 && this.status == 200)
+    {
+      var jsonObject = JSON.parse( xhr.responseText );
+      var code = jsonObject.response.code;
+      console.log(code);
+      tr.parentNode.removeChild(tr);      
+    }
+    };
+      xhr.send(jsonPayload);
+    }
+      catch(err)
+    {
+       document.getElementById("loginResult").innerHTML = err.message;
+    }
+  }
 }
