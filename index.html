@@ -5,6 +5,7 @@
 		<!-- Scales website to devices -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>COP 4331 G5 Login</title>
+		<script type="text/javascript" src="js/code.js"></script>
 		<link rel="stylesheet" href="css/stylesheet.css">
 	</head>
 	<body>
@@ -24,13 +25,14 @@
 					</div>
 					<div class="flex-item">
 						<button id="loginButton" class="buttons" onclick="doLogin();">Login</button>
-						<button id="loginButton" class="buttons" onclick="doRegister();">Register</button>
+						<button id="loginButton" class="buttons" onclick="doReg();">Register</button>
 					</div>
 					<script>
-       			function doRegister() {
+       			function doReg() {
          		window.location.href="Register.html";
-						}
-					 </script>
+       	}
+     </script>
+         <span id="loginResult"></span>
 				</div>
 			</div>
 		</main>

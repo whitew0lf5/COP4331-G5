@@ -11,6 +11,7 @@
 	<nav>
 		<div class="topnav">
 				<a class="active" href="#home">Home</a>
+        <span id="menuLabel">Dream Team Contacts</span>
 			<div class="login-container">
         <p id="Username">
 				<br><p id="Userid">:</p>
@@ -26,9 +27,8 @@
 		<main>
 		<div class = "flex-container">
 			<table class ="flex-item1">
-				<td><input type="text" placeholder="Search Bar" name="searchBar"></td>
-				<td><input type="text" placeholder="Search Bin" name="searchbin"></td>
-				<td><button id="refresh" class="buttons" onclick="doRefresh();">Refresh</button></td>
+				<td><input type="text" placeholder="Search Bar" name="searchBar" id="contactSearch"></td>
+				<td><button id="refresh" class="buttons" onclick="doSearchfirst();">Search</button></td>
 				<td><button id="addContact" class="buttons" onclick="doAddContact();">Add Contact</button></td>
 			</table>
       <div id= "box"></div>
