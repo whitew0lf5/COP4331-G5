@@ -51,9 +51,9 @@ To Deploy the API to the server use SSH to copy the API.py file into the `/var/w
 the user who owns the contact (int)
   
 - return: A json object with error code 200 for success or 404 for connection failures
-### Search Contacts (GET)
-- url: `/api/searchcontacts/<fname>/<lname>/<userid>`
-- parameters: The First Name (string), Last Name (string), User ID of the currently logged in user (int)
+### Search Contacts
+- url: `/api/searchcontacts/<name>/<userid>`
+- parameters: The Name (string), and User ID of the currently logged in user (int)
 - return: A json object with error code 200 if the search was successful and 404 if there was a connection failure.
  There will also be a data key that maps to an array of arrays, where each sub-array has all the contact information for
   each of the contacts that matched the search query
