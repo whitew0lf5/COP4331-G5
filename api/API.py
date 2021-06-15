@@ -32,7 +32,7 @@ def unpack_results(stored_results):
     return results
 
 
-@api.route('/ping')
+@api.route('/ping', methods=['GET'])
 def ping():
     return jsonify({"response": {"code": 200, "message": "Ping!"}})
 
